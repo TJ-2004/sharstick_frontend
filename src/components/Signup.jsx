@@ -1,5 +1,5 @@
 import React,{useState} from 'react'
-
+import axios from 'axios';
 const Signup = () => {
     const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -20,6 +20,23 @@ const Signup = () => {
       console.error(error);
       alert("Failed to connect with MetaMask. Please try again.");
     }
+  };
+  const handleClickApi = async () => {
+    axios
+      .post("http://localhost:8080/auth/signup",
+      {
+        name: Name,
+        username: username,
+        password: password,
+      })
+      .then(
+        (response) => {
+          console.log(response);
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
   };
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -106,6 +123,7 @@ const Signup = () => {
             <button
               type="submit"
               className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+              onClick={handleClickApi}
             >
               <span className="absolute left-0 inset-y-0 flex items-center pl-3">
                 <svg

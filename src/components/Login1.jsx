@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Signup from "./Signup";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate  } from "react-router-dom";
 
 const Login1 = () => {
   const navigate = useNavigate();
@@ -10,11 +10,8 @@ const Login1 = () => {
   const [password, setPassword] = useState("");
 
   const handleClickApi = async () => {
-    axios.defaults.headers.post["Access-Control-Allow-Origin"] = "*";
     axios
-      .post("http://192.168.252.253:8080/auth/login", {
-        header : 'Access-Control-Allow-Methods: GET, PUT, POST, DELETE, OPTIONS'
-      },
+      .post("http://localhost:8080/auth/login",
       {
         username: username,
         password: password,
@@ -22,6 +19,12 @@ const Login1 = () => {
       .then(
         (response) => {
           console.log(response);
+          console.log(response.statusText);
+
+
+          if(response.statusText === "OK"){
+            navigate("/home");
+          }
         },
         (error) => {
           console.log(error);
