@@ -20,6 +20,7 @@ function LoginForm() {
       <img src={pictures} className="absolute top-0 left-0 w-full h-full object-cover" />
       <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white text-center">
         <h1 className="text-9xl font-bold">ShardTicks</h1>
+        <h2 className="text-black font-bold text-2xl ">Unlock the future of events with NFT Tickets.</h2>
       </div>
     </div>
     <Login1 />

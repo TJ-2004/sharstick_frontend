@@ -1,29 +1,38 @@
-import React, { useState } from "react";
+import React, {  createContext,  useState } from "react";
 import Signup from "./Signup";
+import Home from "./Home";
 import axios from "axios";
-import { useNavigate  } from "react-router-dom";
+import { useNavigate ,Routes,Route,Link  } from "react-router-dom";
+import pictures from "../svgtopng/image.png";
+import Organize from "./Organize";
+export const Context = createContext();
 
 const Login1 = () => {
   const navigate = useNavigate();
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [userNAME , setuserNAME] = useState("");
 
   const handleClickApi = async () => {
     axios
-      .post("http://localhost:8080/auth/login",
+      .post("http://192.168.59.253:8080/auth/login",
       {
         username: username,
         password: password,
       })
       .then(
         (response) => {
-          console.log(response);
-          console.log(response.statusText);
+          // console.log(response);
+          // console.log(response.statusText);
+          console.log(response.data["username"]);
+            setuserNAME(response.data["username"]);
 
 
           if(response.statusText === "OK"){
-            navigate("/home");
+            <Link to={{pathname : "/home" , state : {userNAme : userNAME}}}>
+              
+            </Link>
           }
         },
         (error) => {
@@ -58,8 +67,12 @@ const Login1 = () => {
     console.log("Password:", password);
   };
   return (
+    <Context.Provider 
+    value={{userNAME,setuserNAME}}>
     <div className="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8  bg-red-500 ">
       <div className="max-w-md w-full space-y-8">
+      <img src={pictures}/>
+
         <div>
           <h2 className="mt-6 text-center text-5xl font-extrabold text-gray-900">
             Login
@@ -153,7 +166,15 @@ const Login1 = () => {
           </div>
         </form>
       </div>
+      <Routes>
+          <Route path="/organize" element={<Organize username={username} />} />
+          {/* Other routes */}
+          
+
+        </Routes>
     </div>
+    </Context.Provider>
+
   );
 };
 

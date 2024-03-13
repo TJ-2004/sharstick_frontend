@@ -1,8 +1,11 @@
 import React,{useState} from 'react'
 import axios from 'axios';
+import { useNavigate ,Routes , Route } from 'react-router-dom';
+import Organize from './Organize';
 const Signup = () => {
     const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
   const [Name, setName] = useState("");
 
   const handleConnectMetaMask = async () => {
@@ -23,7 +26,7 @@ const Signup = () => {
   };
   const handleClickApi = async () => {
     axios
-      .post("http://localhost:8080/auth/signup",
+      .post("http://192.168.59.253:8080/auth/signup",
       {
         name: Name,
         username: username,
@@ -32,6 +35,12 @@ const Signup = () => {
       .then(
         (response) => {
           console.log(response);
+          console.log(response.statusText);
+
+          
+          if(response.statusText === "OK"){
+            navigate("/home");
+          }
         },
         (error) => {
           console.log(error);
@@ -150,8 +159,13 @@ const Signup = () => {
           </div>
         </form>
       </div>
+      <Routes>
+          <Route path="/organize" element={<Organize username={username} />} />
+          {/* Other routes */}
+        </Routes>
     </div>
   )
 }
+// export  username;
 
-export default Signup
+export default Signup;

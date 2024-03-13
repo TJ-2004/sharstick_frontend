@@ -1,9 +1,18 @@
-import React from 'react'
+import React,{useContext} from 'react'
 import Header from "../components/Header"
-const Home = () => {
+import Buy from './Buy'
+import { Context } from './Login1'
+
+
+const Home = (props) => {
+
+
   return (
-    <div>
+    <div >
       <Header />
+      <div>{props.location.state.userNAme}</div>
+
+      <Buy />
     </div>
   )
 }
